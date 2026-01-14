@@ -1,0 +1,34 @@
+{
+  "24413": [
+    {
+      "username": "admin",
+      "gridsCut": 5,
+      "gridsRecovery": 0,
+      "time": "2026/01/14 10:44:15",
+      "timestamp": 1768358655652
+    }
+  ],
+  "24420": [
+    {
+      "username": "admin",
+      "gridsCut": 0,
+      "gridsRecovery": 3,
+      "time": "2026/01/14 11:17:51",
+      "timestamp": 1768360671812
+    },
+    {
+      "username": "admin",
+      "gridsCut": 5,
+      "gridsRecovery": 0,
+      "time": "2026/01/14 10:56:40",
+      "timestamp": 1768359400421
+    },
+    {
+      "username": "admin",
+      "gridsCut": 4,
+      "gridsRecovery": 0,
+      "time": "2026/01/14 10:44:24",
+      "timestamp": 1768358664789
+    }
+  ]
+}
