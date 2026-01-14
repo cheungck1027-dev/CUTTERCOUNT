@@ -43,6 +43,28 @@ function loadData() {
             entries: value
           };
         } else if (value && typeof value === 'object' && value.entries) {
+          // 新格式
+          warrantsData[warrantNumber] = value;
+        }
+      }
+      
+      console.log('✓ 數據已成功載入');
+    } else {
+      // 如果 data.json 不存在，使用初始數據
+      try {
+        const initialData = fs.readFileSync(path.join(__dirname, 'initial-data.json'), 'utf-8');
+        warrantsData = JSON.parse(initialData);
+        console.log('✓ 數據已成功載入 (使用初始數據)');
+      } catch (e) {
+        console.log('ℹ️ 沒有初始數據文件，從空白開始');
+        warrantsData = {};
+      }
+    }
+  } catch (error) {
+    console.error('載入數據失敗:', error.message);
+    warrantsData = {};
+  }
+}
           // 新格式：已經是對象
           warrantsData[warrantNumber] = value;
         }

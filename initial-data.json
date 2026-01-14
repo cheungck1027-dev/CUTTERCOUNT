@@ -1,0 +1,57 @@
+{
+  "24413": {
+    "stockInfo": {
+      "code": "00941",
+      "name": "中國移動",
+      "warrantProductName": "移動認購證"
+    },
+    "entries": [
+      {
+        "username": "user1",
+        "gridsCut": 8,
+        "gridsRecovery": 2,
+        "time": "2026/01/14 10:30:00",
+        "timestamp": 1768356600000
+      },
+      {
+        "username": "user2",
+        "gridsCut": 5,
+        "gridsRecovery": 1,
+        "time": "2026/01/14 11:15:30",
+        "timestamp": 1768359930000
+      }
+    ]
+  },
+  "24420": {
+    "stockInfo": {
+      "code": "02259",
+      "name": "紫國集團",
+      "warrantProductName": "紫國牛證"
+    },
+    "entries": [
+      {
+        "username": "user1",
+        "gridsCut": 12,
+        "gridsRecovery": 3,
+        "time": "2026/01/14 09:45:00",
+        "timestamp": 1768352700000
+      }
+    ]
+  },
+  "23208": {
+    "stockInfo": {
+      "code": "03759",
+      "name": "摩利寧德",
+      "warrantProductName": "摩利寧德認購"
+    },
+    "entries": [
+      {
+        "username": "user2",
+        "gridsCut": 15,
+        "gridsRecovery": 5,
+        "time": "2026/01/14 08:30:00",
+        "timestamp": 1768348200000
+      }
+    ]
+  }
+}
