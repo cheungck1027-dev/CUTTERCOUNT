@@ -140,6 +140,46 @@ app.post('/login', (req, res) => {
   }
 });
 
+// 排行榜 API - 按總數排序
+app.get('/api/leaderboard', (req, res) => {
+  const leaderboard = [];
+  
+  for (const [warrantNumber, warrantData] of Object.entries(warrantsData)) {
+    const entries = warrantData.entries || [];
+    const stockInfo = warrantData.stockInfo || {};
+    
+    // 計算總數（最大的淨虧損）
+    const userNets = {};
+    entries.forEach(entry => {
+      if (entry && entry.timestamp) {
+        if (!userNets[entry.username]) {
+          userNets[entry.username] = 0;
+        }
+        userNets[entry.username] += entry.gridsCut - entry.gridsRecovery;
+      }
+    });
+    
+    const totalGrids = Object.keys(userNets).length > 0 ? Math.max(...Object.values(userNets)) : 0;
+    
+    if (totalGrids > 0 || entries.length > 0) {
+      leaderboard.push({
+        warrantNumber: warrantNumber,
+        totalGrids: totalGrids,
+        entryCount: entries.length,
+        stockCode: stockInfo.code || 'N/A',
+        stockName: stockInfo.name || 'N/A',
+        warrantProductName: stockInfo.warrantProductName || ''
+      });
+    }
+  }
+  
+  // 按總數降序排列
+  leaderboard.sort((a, b) => b.totalGrids - a.totalGrids);
+  
+  res.json(leaderboard);
+});
+
+
 // 香港股票名稱到代碼的映射表
 const stockNameToCode = {
   // 常見股票
@@ -217,6 +257,14 @@ async function fetchUnderlyingStock(warrantCode) {
       const stockCode = rawStockCode.padStart(5, '0');
       console.log(`找到正股代碼: ${rawStockCode} → ${stockCode}`);
       
+      // 抓取窩輪產品名稱（如"摩利寧德認購"）
+      let warrantProductName = null;
+      const productSpan = $('span.h4.d-md-block');
+      if (productSpan.length > 0) {
+        warrantProductName = productSpan.first().text().trim();
+        console.log(`✓ 找到窩輪產品名稱: ${warrantProductName}`);
+      }
+      
       // 嘗試多種方式查找股票名稱
       let stockName = null;
       
@@ -266,7 +314,8 @@ async function fetchUnderlyingStock(warrantCode) {
       
       return {
         code: stockCode,
-        name: stockName
+        name: stockName,
+        warrantProductName: warrantProductName  // 新增窩輪產品名稱
       };
     }
     

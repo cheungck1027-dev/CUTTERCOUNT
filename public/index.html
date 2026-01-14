@@ -59,7 +59,12 @@
             </form>
         </div>
 
-        <div class="table-section">
+        <div class="tabs-section">
+            <button id="data-tab" class="tab-btn active">📊 即時資料</button>
+            <button id="leaderboard-tab" class="tab-btn">🏆 排行榜</button>
+        </div>
+
+        <div id="data-view" class="table-section">
             <h2>即時資料</h2>
             <div class="search-section">
                 <div class="search-bar">
@@ -82,6 +87,27 @@
                     <tbody id="table-body">
                         <tr>
                             <td colspan="3" class="no-data">暫無資料</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="leaderboard-view" class="table-section" style="display: none;">
+            <h2>排行榜 - 斬最多的窩輪</h2>
+            <div class="leaderboard-container">
+                <table id="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th class="rank-col">排名</th>
+                            <th class="number-col">窩輪 / 正股</th>
+                            <th class="total-col">總斬數</th>
+                            <th class="product-col">窩輪產品名稱</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <tr>
+                            <td colspan="4" class="no-data">暫無資料</td>
                         </tr>
                     </tbody>
                 </table>

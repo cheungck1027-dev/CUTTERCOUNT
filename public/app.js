@@ -16,6 +16,97 @@ const tableBody = document.getElementById('table-body');
 const searchInput = document.getElementById('search-input');
 const clearFilterBtn = document.getElementById('clear-filter-btn');
 
+// 頁籤元素
+const dataTab = document.getElementById('data-tab');
+const leaderboardTab = document.getElementById('leaderboard-tab');
+const dataView = document.getElementById('data-view');
+const leaderboardView = document.getElementById('leaderboard-view');
+const leaderboardBody = document.getElementById('leaderboard-body');
+
+// 頁籤切換
+dataTab.addEventListener('click', () => {
+  dataTab.classList.add('active');
+  leaderboardTab.classList.remove('active');
+  dataView.style.display = 'block';
+  leaderboardView.style.display = 'none';
+});
+
+leaderboardTab.addEventListener('click', () => {
+  leaderboardTab.classList.add('active');
+  dataTab.classList.remove('active');
+  dataView.style.display = 'none';
+  leaderboardView.style.display = 'block';
+  loadLeaderboard();
+});
+
+// 加載排行榜
+async function loadLeaderboard() {
+  try {
+    const response = await fetch('/api/leaderboard');
+    const leaderboard = await response.json();
+    updateLeaderboard(leaderboard);
+  } catch (error) {
+    console.error('加載排行榜失敗:', error);
+  }
+}
+
+// 更新排行榜表格
+function updateLeaderboard(leaderboard) {
+  leaderboardBody.innerHTML = '';
+  
+  if (leaderboard.length === 0) {
+    leaderboardBody.innerHTML = '<tr><td colspan="4" class="no-data">暫無資料</td></tr>';
+    return;
+  }
+  
+  leaderboard.forEach((item, index) => {
+    const row = document.createElement('tr');
+    
+    // 排名
+    const rankCell = document.createElement('td');
+    rankCell.className = 'rank-cell';
+    if (index === 0) {
+      rankCell.innerHTML = '🥇 1';
+    } else if (index === 1) {
+      rankCell.innerHTML = '🥈 2';
+    } else if (index === 2) {
+      rankCell.innerHTML = '🥉 3';
+    } else {
+      rankCell.textContent = (index + 1);
+    }
+    row.appendChild(rankCell);
+    
+    // 窩輪 / 正股
+    const numberCell = document.createElement('td');
+    numberCell.className = 'warrant-number';
+    const warrantDiv = document.createElement('div');
+    warrantDiv.className = 'warrant-code';
+    warrantDiv.textContent = `窝輪: ${item.warrantNumber}`;
+    numberCell.appendChild(warrantDiv);
+    
+    const stockDiv = document.createElement('div');
+    stockDiv.className = 'stock-info-inline';
+    stockDiv.innerHTML = `<span class="stock-badge">正股: ${item.stockCode}</span> <span class="stock-name-display">${item.stockName}</span>`;
+    numberCell.appendChild(stockDiv);
+    row.appendChild(numberCell);
+    
+    // 總斬數
+    const totalCell = document.createElement('td');
+    totalCell.className = 'total-number';
+    totalCell.textContent = item.totalGrids;
+    row.appendChild(totalCell);
+    
+    // 窩輪產品名稱
+    const productCell = document.createElement('td');
+    productCell.className = 'product-cell';
+    productCell.textContent = item.warrantProductName || '-';
+    row.appendChild(productCell);
+    
+    leaderboardBody.appendChild(row);
+  });
+}
+
+
 // 登入處理
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
