@@ -321,7 +321,18 @@ function updateTable(data) {
         // 創建窩輪號碼行
         const row = document.createElement('tr');
         
-        // A行: 窩輪牛熊號碼 + 正股信息
+        // 第1列: 產品名稱
+        const productCell = document.createElement('td');
+        productCell.className = 'product-cell';
+        if (stockInfo && stockInfo.warrantProductName) {
+            productCell.textContent = stockInfo.warrantProductName;
+        } else {
+            productCell.textContent = '-';
+            productCell.style.color = 'var(--text-secondary)';
+        }
+        row.appendChild(productCell);
+        
+        // 第2列: 窩輪牛熊號碼 + 正股信息
         const numberCell = document.createElement('td');
         numberCell.className = 'warrant-number';
         
@@ -330,14 +341,6 @@ function updateTable(data) {
         warrantSpan.className = 'warrant-code';
         warrantSpan.textContent = `窝輪: ${warrantNumber}`;
         numberCell.appendChild(warrantSpan);
-        
-        // 窩輪產品名稱（如果有）
-        if (stockInfo && stockInfo.warrantProductName) {
-            const productDiv = document.createElement('div');
-            productDiv.className = 'product-name';
-            productDiv.textContent = stockInfo.warrantProductName;
-            numberCell.appendChild(productDiv);
-        }
         
         // 正股信息（如果有）
         if (stockInfo && stockInfo.code) {
@@ -351,8 +354,9 @@ function updateTable(data) {
             stockDiv.textContent = '正股: 待查詢...';
             numberCell.appendChild(stockDiv);
         }
+        row.appendChild(numberCell);
         
-        // B行: 計算總數
+        // 第3列: 計算總數
         const totalCell = document.createElement('td');
         totalCell.className = 'total-number';
         
@@ -370,8 +374,9 @@ function updateTable(data) {
         
         const maxNet = Object.keys(userNets).length > 0 ? Math.max(...Object.values(userNets)) : 0;
         totalCell.textContent = maxNet > 0 ? maxNet : 0;
+        row.appendChild(totalCell);
         
-        // C行: 斬了麼 (所有用戶的記錄，按時間排序)
+        // 第4列: 斬了麼 (所有用戶的記錄，按時間排序)
         const dataCell = document.createElement('td');
         
         // 已經在 server 端按時間戳排序，這裡直接顯示
@@ -444,7 +449,6 @@ function updateTable(data) {
             dataCell.appendChild(entryDiv);
         });
         
-        row.appendChild(numberCell);
         row.appendChild(totalCell);
         row.appendChild(dataCell);
         tableBody.appendChild(row);
