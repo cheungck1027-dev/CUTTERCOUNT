@@ -76,6 +76,12 @@ function updateLeaderboard(leaderboard) {
     }
     row.appendChild(rankCell);
     
+    // 窩輪產品名稱
+    const productCell = document.createElement('td');
+    productCell.className = 'product-cell';
+    productCell.textContent = item.warrantProductName || '-';
+    row.appendChild(productCell);
+    
     // 窩輪 / 正股
     const numberCell = document.createElement('td');
     numberCell.className = 'warrant-number';
@@ -95,12 +101,6 @@ function updateLeaderboard(leaderboard) {
     totalCell.className = 'total-number';
     totalCell.textContent = item.totalGrids;
     row.appendChild(totalCell);
-    
-    // 窩輪產品名稱
-    const productCell = document.createElement('td');
-    productCell.className = 'product-cell';
-    productCell.textContent = item.warrantProductName || '-';
-    row.appendChild(productCell);
     
     leaderboardBody.appendChild(row);
   });
