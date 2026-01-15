@@ -117,7 +117,7 @@ async function fetchUnderlyingStock(warrantCode) {
   }
 }
 
-// 測試多個窝輪
+// 測試多個窩輪
 async function runTests() {
   const testCases = [
     { code: '23296', expected: '700' },  // 騰訊

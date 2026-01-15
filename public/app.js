@@ -81,7 +81,7 @@ function updateLeaderboard(leaderboard) {
     numberCell.className = 'warrant-number';
     const warrantDiv = document.createElement('div');
     warrantDiv.className = 'warrant-code';
-    warrantDiv.textContent = `窝輪: ${item.warrantNumber}`;
+    warrantDiv.textContent = `窩輪: ${item.warrantNumber}`;
     numberCell.appendChild(warrantDiv);
     
     const stockDiv = document.createElement('div');
@@ -202,7 +202,7 @@ warrantForm.addEventListener('submit', (e) => {
     }
 });
 
-// 搜尋功能 - 支持窝輪號碼、正股代碼、正股名稱
+// 搜尋功能 - 支持窩輪號碼、正股代碼、正股名稱
 function performSearch() {
     const searchTerm = searchInput.value.toLowerCase().trim();
     
@@ -216,7 +216,7 @@ function performSearch() {
         const warrantData = allData[warrantNumber];
         const stockInfo = warrantData.stockInfo;
         
-        // 檢查窝輪號碼是否匹配
+        // 檢查窩輪號碼是否匹配
         if (warrantNumber.toLowerCase().includes(searchTerm)) {
             filtered[warrantNumber] = warrantData;
             return;
@@ -339,7 +339,7 @@ function updateTable(data) {
         // 窩輪號碼
         const warrantSpan = document.createElement('div');
         warrantSpan.className = 'warrant-code';
-        warrantSpan.textContent = `窝輪: ${warrantNumber}`;
+        warrantSpan.textContent = `窩輪: ${warrantNumber}`;
         numberCell.appendChild(warrantSpan);
         
         // 正股信息（如果有）

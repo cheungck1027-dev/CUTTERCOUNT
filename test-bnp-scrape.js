@@ -71,5 +71,5 @@ async function testBnpScrape(warrantCode) {
   }
 }
 
-// 測試多個窝輪
+// 測試多個窩輪
 testBnpScrape('24413');
