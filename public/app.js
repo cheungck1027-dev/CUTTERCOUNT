@@ -331,6 +331,14 @@ function updateTable(data) {
         warrantSpan.textContent = `窝輪: ${warrantNumber}`;
         numberCell.appendChild(warrantSpan);
         
+        // 窩輪產品名稱（如果有）
+        if (stockInfo && stockInfo.warrantProductName) {
+            const productDiv = document.createElement('div');
+            productDiv.className = 'product-name';
+            productDiv.textContent = stockInfo.warrantProductName;
+            numberCell.appendChild(productDiv);
+        }
+        
         // 正股信息（如果有）
         if (stockInfo && stockInfo.code) {
             const stockDiv = document.createElement('div');

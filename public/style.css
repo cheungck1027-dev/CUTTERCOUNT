@@ -567,6 +567,18 @@ tr:last-child td {
     margin-bottom: 8px;
 }
 
+.product-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-secondary);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 152, 0, 0.1));
+    padding: 6px 8px;
+    border-left: 3px solid var(--accent-secondary);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-style: italic;
+}
+
 .stock-info-inline {
     font-size: 12px;
     color: var(--text-primary);
