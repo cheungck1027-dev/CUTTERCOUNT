@@ -1,12 +1,1 @@
-run = "npm install && node server.js"
-
-[build]
-shell = ["bash"]
-
-[portForwardingProvider]
-external = "replit.com"
-
-[[ports]]
-localPort = 3000
-externalPort = 80
-expose = "public"
+run = "node server.js"
