@@ -247,7 +247,26 @@ clearFilterBtn?.addEventListener('click', () => {
 
 // Socket.IO 連接
 function connectSocket() {
-    socket = io();
+    socket = io({
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        reconnectionAttempts: 5,
+        transports: ['websocket', 'polling']
+    });
+    
+    // 連接事件
+    socket.on('connect', () => {
+        console.log('已連接到伺服器');
+    });
+    
+    socket.on('connect_error', (error) => {
+        console.error('連接錯誤:', error);
+    });
+    
+    socket.on('disconnect', (reason) => {
+        console.log('已斷開連接:', reason);
+    });
     
     // 接收初始資料
     socket.on('initial-data', (data) => {
@@ -265,9 +284,6 @@ function connectSocket() {
     socket.on('error', (errorData) => {
         alert('錯誤: ' + errorData.message);
     });
-    
-    socket.on('connect', () => {
-        console.log('已連接到伺服器');
     });
     
     socket.on('disconnect', () => {

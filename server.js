@@ -5,7 +5,9 @@ const io = require('socket.io')(http, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"]
-  }
+  },
+  transports: ['websocket', 'polling'],
+  allowEIO3: true
 });
 const path = require('path');
 const fs = require('fs');
