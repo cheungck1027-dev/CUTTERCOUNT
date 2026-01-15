@@ -55,30 +55,15 @@ function loadData() {
         const initialData = fs.readFileSync(path.join(__dirname, 'initial-data.json'), 'utf-8');
         warrantsData = JSON.parse(initialData);
         console.log('✓ 數據已成功載入 (使用初始數據)');
+        console.log('載入的窩輪:', Object.keys(warrantsData));
       } catch (e) {
         console.log('ℹ️ 沒有初始數據文件，從空白開始');
+        console.log('錯誤:', e.message);
         warrantsData = {};
       }
     }
   } catch (error) {
     console.error('載入數據失敗:', error.message);
-    warrantsData = {};
-  }
-}
-          // 新格式：已經是對象
-          warrantsData[warrantNumber] = value;
-        }
-      }
-      
-      console.log('✓ 數據已成功載入');
-      
-      // 為舊數據補充正股信息
-      setTimeout(() => {
-        updateMissingStockInfo();
-      }, 1000);
-    }
-  } catch (error) {
-    console.error('✗ 載入數據失敗:', error.message);
     warrantsData = {};
   }
 }
@@ -164,7 +149,11 @@ app.post('/login', (req, res) => {
 
 // 排行榜 API - 按總數排序
 app.get('/api/leaderboard', (req, res) => {
-  const leaderboard = [];
+  try {
+    console.log('Leaderboard API 被調用');
+    console.log('當前窩輪數據:', Object.keys(warrantsData));
+    
+    const leaderboard = [];
   
   for (const [warrantNumber, warrantData] of Object.entries(warrantsData)) {
     const entries = warrantData.entries || [];
@@ -198,7 +187,12 @@ app.get('/api/leaderboard', (req, res) => {
   // 按總數降序排列
   leaderboard.sort((a, b) => b.totalGrids - a.totalGrids);
   
+  console.log('返回排行榜數據:', leaderboard.length, '條');
   res.json(leaderboard);
+  } catch (error) {
+    console.error('排行榜 API 錯誤:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 
