@@ -1,5 +1,6 @@
 run = "node server.js"
+
 [ports]
 3000 = {
-
+  "onBoot": "sleep 3"
 }

@@ -540,14 +540,26 @@ io.on('connection', (socket) => {
 
 const PORT = process.env.PORT || 3000;
 http.listen(PORT, '0.0.0.0', () => {
-  console.log(`伺服器運行在 http://localhost:${PORT}`);
-  console.log(`局域網訪問: http://${getLocalIP()}:${PORT}`);
-  console.log('預設帳號: admin / admin123');
-  console.log('預設帳號: user1 / pass1');
-  console.log('預設帳號: user2 / pass2');
+  console.log(`✓ 伺服器已啟動`);
+  console.log(`  監聽: http://0.0.0.0:${PORT}`);
+  
+  // 只在本地開發環境顯示局域網IP，避免Replit上DNS超時
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      const localIP = getLocalIP();
+      console.log(`  局域網: http://${localIP}:${PORT}`);
+    } catch (e) {
+      // 忽略IP查詢錯誤
+    }
+  }
+  
+  console.log(`\n預設帳號:`);
+  console.log(`  admin / admin123`);
+  console.log(`  user1 / pass1`);
+  console.log(`  user2 / pass2`);
 });
 
-// 獲取本地 IP 地址
+// 獲取本地 IP 地址（僅在本地開發環境使用）
 function getLocalIP() {
   const os = require('os');
   const interfaces = os.networkInterfaces();
