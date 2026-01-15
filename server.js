@@ -105,6 +105,28 @@ loadData();
 app.use(express.static('public'));
 app.use(express.json());
 
+// 非同步補充缺失的正股信息（不阻塞 server 啟動）
+setImmediate(async () => {
+  const warrantsToUpdate = Object.keys(warrantsData).filter(w => !warrantsData[w].stockInfo);
+  if (warrantsToUpdate.length > 0) {
+    console.log(`\n正在後台補充 ${warrantsToUpdate.length} 個窩輪的正股信息...`);
+    for (const warrantNumber of warrantsToUpdate) {
+      try {
+        const stockInfo = await fetchUnderlyingStock(warrantNumber);
+        if (stockInfo) {
+          warrantsData[warrantNumber].stockInfo = stockInfo;
+          console.log(`✓ 補充: ${warrantNumber} → ${stockInfo.code} ${stockInfo.name}`);
+        }
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      } catch (error) {
+        console.error(`補充失敗: ${warrantNumber}`, error.message);
+      }
+    }
+    saveData();
+    console.log('✓ 正股信息補充完成\n');
+  }
+});
+
 // 驗證輸入函數
 function validateWarrantInput(data) {
   const { warrantNumber, username, gridsCut, gridsRecovery } = data;
