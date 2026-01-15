@@ -1,17 +1,7 @@
-modules = ["nodejs-20"]
+run = "npm install && node server.js"
 
-[nix]
-channel = "stable-23_11"
-
-[unitTest]
-language = "nodejs"
-
-[deployment]
-run = ["npm", "install", "&&", "node", "server.js"]
-build = ["npm", "install"]
-
-[workflow]
-oneshot = true
+[build]
+shell = ["bash"]
 
 [[ports]]
 localPort = 3000
