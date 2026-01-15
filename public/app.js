@@ -284,10 +284,9 @@ function connectSocket() {
     socket.on('error', (errorData) => {
         alert('錯誤: ' + errorData.message);
     });
-    });
     
-    socket.on('disconnect', () => {
-        console.log('已斷開連接');
+    socket.on('disconnect', (reason) => {
+        console.log('已斷開連接:', reason);
     });
 }
 
